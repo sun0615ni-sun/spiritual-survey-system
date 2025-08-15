@@ -935,7 +935,42 @@
             margin-top: 0.25rem;
         }
 
+        /* 版本列表 */
+        .version-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+        }
 
+        .version-item:hover {
+            background: #f3f4f6;
+            border-color: #d1d5db;
+        }
+
+        .version-info {
+            flex: 1;
+        }
+
+        .version-name {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .version-date {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .version-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
 
         /* 進度條 */
         .progress-bar {
@@ -954,6 +989,34 @@
             border-radius: 4px;
         }
 
+        /* 自動保存指示器 */
+        .auto-save-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #059669;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .auto-save-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .auto-save-indicator.saving {
+            background: #d97706;
+        }
+
+        .auto-save-indicator.error {
+            background: #dc2626;
+        }
 
         /* 保存選項面板 */
         .save-options {
@@ -980,6 +1043,13 @@
         /* 隱藏類 */
         .hidden {
             display: none !important;
+        }
+
+        /* 錯誤狀態 */
+        .error-message {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
         }
 
         .success-message {
@@ -1123,12 +1193,15 @@
         <div class="loading-spinner"></div>
     </div>
 
-
+    <!-- 自動保存指示器 -->
+    <div id="auto-save-indicator" class="auto-save-indicator">
+        <span id="save-status-text">已自動保存</span>
+    </div>
 
     <!-- 導航欄 -->
     <nav class="navbar">
         <div class="nav-content">
-            <div class="nav-title">靈性修養問卷系統 </div>
+            <div class="nav-title">靈性修養問卷系統 - 最終修復版</div>
             <div class="nav-buttons">
                 <button class="btn btn-primary" onclick="showPage(&#39;editor&#39;)">問卷編輯</button>
                 <button class="btn btn-secondary" onclick="showPage(&#39;survey&#39;)">問卷作答</button>
@@ -2540,10 +2613,76 @@
                 </div>
             </div>
                         
-                  
-             
+                        <!-- 版本管理 -->
+                        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <h4>版本管理</h4>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-small btn-secondary" onclick="saveVersion()">儲存版本</button>
+                                    <button class="btn btn-small btn-secondary" onclick="showVersionModal()">載入版本</button>
+                                </div>
+                            </div>
+                            <div id="version-list">
+                <div class="version-item fade-in">
+                    <div class="version-info">
+                        <div class="version-name">問卷版本 2025-08-15 17:08:08</div>
+                        <div class="version-date">2025-08-15</div>
+                    </div>
+                    <div class="version-actions">
+                        <button class="btn-small" onclick="loadVersion(&#39;meclva8jvwzpi5u5pre&#39;)">載入</button>
+                        <button class="btn-small btn-danger" onclick="deleteVersion(&#39;meclva8jvwzpi5u5pre&#39;)">刪除</button>
+                    </div>
+                </div>
+            
+                <div class="version-item fade-in">
+                    <div class="version-info">
+                        <div class="version-name">問卷版本 2025-08-15 17:07:38</div>
+                        <div class="version-date">2025-08-15</div>
+                    </div>
+                    <div class="version-actions">
+                        <button class="btn-small" onclick="loadVersion(&#39;meclunc6dv9uw9rpg9&#39;)">載入</button>
+                        <button class="btn-small btn-danger" onclick="deleteVersion(&#39;meclunc6dv9uw9rpg9&#39;)">刪除</button>
+                    </div>
+                </div>
+            
+                <div class="version-item fade-in">
+                    <div class="version-info">
+                        <div class="version-name">問卷版本 2025-08-15 16:44:30</div>
+                        <div class="version-date">2025-08-15</div>
+                    </div>
+                    <div class="version-actions">
+                        <button class="btn-small" onclick="loadVersion(&#39;mecl0w5xy5ekvg5vbgp&#39;)">載入</button>
+                        <button class="btn-small btn-danger" onclick="deleteVersion(&#39;mecl0w5xy5ekvg5vbgp&#39;)">刪除</button>
+                    </div>
+                </div>
+            
+                <div class="version-item fade-in">
+                    <div class="version-info">
+                        <div class="version-name">問卷版本 2025-08-15 15:23:04</div>
+                        <div class="version-date">2025-08-15</div>
+                    </div>
+                    <div class="version-actions">
+                        <button class="btn-small" onclick="loadVersion(&#39;meci46dcnd6xcjdpm5q&#39;)">載入</button>
+                        <button class="btn-small btn-danger" onclick="deleteVersion(&#39;meci46dcnd6xcjdpm5q&#39;)">刪除</button>
+                    </div>
+                </div>
+            </div>
+                        </div>
 
-                
+                        <!-- 資料管理 -->
+                        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+                            <h4 style="margin-bottom: 1rem;">資料管理</h4>
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <button class="btn btn-small btn-secondary" onclick="exportLibrary()">匯出題庫</button>
+                                <button class="btn btn-small btn-secondary" onclick="showImportModal()">匯入題庫</button>
+                                <button class="btn btn-small btn-secondary" onclick="exportResponses()">匯出回覆</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 作答頁面 -->
     <div id="survey-page" class="page">
@@ -2672,10 +2811,65 @@
                     </div>
                 </div>
 
-          
+                <!-- 保存選項面板 -->
+                <div id="save-options" class="save-options">
+                    <div class="save-options-title">保存問卷答案</div>
+                    <div class="save-buttons">
+                        <button type="button" class="btn btn-primary" onclick="submitSurvey()">完整提交問卷</button>
+                        <button type="button" class="btn btn-secondary" onclick="savePartialAnswers()">保存當前答案</button>
+                        <button type="button" class="btn btn-warning" onclick="exportAnswersAsJSON()">匯出為 JSON</button>
+                        <button type="button" class="btn btn-success" onclick="copyAnswersToClipboard()">複製到剪貼簿</button>
+                    </div>
+                    <div style="margin-top: 1rem; font-size: 0.875rem; color: #6b7280;">
+                        <p>• <strong>完整提交問卷</strong>：需填寫所有題目和個人資料，生成完整分析報告</p>
+                        <p>• <strong>保存當前答案</strong>：保存已填寫的答案，可稍後繼續</p>
+                        <p>• <strong>匯出為 JSON</strong>：下載答案數據文件</p>
+                        <p>• <strong>複製到剪貼簿</strong>：將答案複製到剪貼簿，可貼到其他地方</p>
+                    </div>
+                </div>
 
-          
-          
+                <!-- 結果分析 -->
+                <div id="result-panel" class="results-container hidden">
+                    <div class="results-header">
+                        <div class="results-title">分析結果</div>
+                        <div class="results-subtitle">您的靈性修養評估報告</div>
+                    </div>
+
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="result-card-title">靈性修養七面向</div>
+                            <div id="facets-scores"></div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-card-title">靈性健康十核心指標</div>
+                            <div id="indicators-scores"></div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-card-title">靈修七原則</div>
+                            <div id="principles-scores"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-title">靈性修養七面向雷達圖</div>
+                        <canvas id="radar-chart" class="chart-canvas"></canvas>
+                    </div>
+
+                    <div class="suggestions">
+                        <div class="suggestions-title">個人化建議</div>
+                        <div id="suggestions-content"></div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn btn-secondary" onclick="exportResultAsJSON()">下載 JSON</button>
+                        <button class="btn btn-secondary" onclick="exportResultAsCSV()">下載 CSV</button>
+                        <button class="btn btn-primary" onclick="location.reload()">重新作答</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 分類模態框 -->
     <div id="category-modal" class="modal">
         <div class="modal-content">
@@ -2746,7 +2940,21 @@
         </div>
     </div>
 
-  
+    <!-- 版本模態框 -->
+    <div id="version-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">版本管理</div>
+                <button class="modal-close" onclick="hideAllModals()">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="version-list-modal"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="hideAllModals()">關閉</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         'use strict';
@@ -2945,26 +3153,26 @@
 
         // ===== 儲存管理 =====
         
-        //function getFromStorage(key) {
-          //  try {
-          //      const data = localStorage.getItem(key);
-           //     return data ? JSON.parse(data) : null;
-        //    } catch (error) {
-        //        console.error('讀取資料失敗:', error);
-        //        return null;
-         //   }
-    //    }
+        function getFromStorage(key) {
+            try {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : null;
+            } catch (error) {
+                console.error('讀取資料失敗:', error);
+                return null;
+            }
+        }
 
-  //      function saveToStorage(key, data) {
- //           try {
- //               localStorage.setItem(key, JSON.stringify(data));
-  //              return true;
-   //         } catch (error) {
-  //              console.error('儲存資料失敗:', error);
-   //             showToast('儲存失敗: ' + error.message, 'error');
-    //            return false;
-  //          }
-   //     }
+        function saveToStorage(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+                return true;
+            } catch (error) {
+                console.error('儲存資料失敗:', error);
+                showToast('儲存失敗: ' + error.message, 'error');
+                return false;
+            }
+        }
 
         function getCategories() {
             return getFromStorage(CONFIG.STORAGE_KEYS.CATEGORIES) || [];
@@ -3973,7 +4181,7 @@
 
         // ===== 資料管理 =====
         
-  /*      function exportLibrary() {
+        function exportLibrary() {
             try {
                 const data = {
                     categories: getCategories(),
@@ -3992,8 +4200,6 @@
                 showToast('匯出題庫失敗: ' + error.message, 'error');
             }
         }
-
-        */
 
         function showImportModal() {
             const input = document.createElement('input');
@@ -4339,29 +4545,29 @@
                 };
 
                 // 計算分析結果
-//                const analysis = calculateAnalysis(response);
-//                response.aggregates = analysis;
+                const analysis = calculateAnalysis(response);
+                response.aggregates = analysis;
 
                 // 儲存回覆
                 saveResponse(response);
-//
+
                 // 清除部分答案
-//                savePartialAnswers({});
+                savePartialAnswers({});
 
                 // 顯示結果
-  //              displayResults(response);
+                displayResults(response);
                 
-  //              showToast('問卷提交成功', 'success');
+                showToast('問卷提交成功', 'success');
 
-   //         } catch (error) {
-   //             console.error('提交問卷失敗:', error);
-  //              showToast('提交問卷失敗: ' + error.message, 'error');
-//            } finally {
- //               hideLoading();
-//            }
-  //      }
+            } catch (error) {
+                console.error('提交問卷失敗:', error);
+                showToast('提交問卷失敗: ' + error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
 
-/*        function savePartialAnswers() {
+        function savePartialAnswers() {
             try {
                 savePartialAnswers(appState.surveyAnswers);
                 showToast('當前答案已保存', 'success');
@@ -4372,10 +4578,6 @@
                 showAutoSaveIndicator('error');
             }
         }
-
-        */
-
-        /*
 
         function exportAnswersAsJSON() {
             try {
@@ -4868,9 +5070,6 @@
                 clearInterval(appState.autoSaveTimer);
             }
         });
-
-
-        */
     </script>
 
 
