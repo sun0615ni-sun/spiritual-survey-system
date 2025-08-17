@@ -9,10 +9,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
     <style>
         .sortable-ghost {
             opacity: 0.4;
@@ -31,8 +27,7 @@
         <div class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl font-bold">靈性修養問卷生成與分析系統</h1>
-                <div class="flex space-x-4 items-center">
-                    <span id="userStatus" class="text-sm text-white/80">登錄中...</span>
+                <div class="flex space-x-4">
                     <button onclick="exportQuestions()" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg transition-colors">
                         <i class="fas fa-download mr-2"></i>匯出題庫
                     </button>
@@ -251,29 +246,12 @@
     </div>
 
     <script>
-        // Firebase 配置
-        const firebaseConfig = {
-            apiKey: "AIzaSyD1YhfMcyIPZ3jaGxSBENspTzaZWrsnzlU",
-            authDomain: "spiritual-survey-system.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        // 初始化Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
-
         // Global variables
         let categories = [];
         let questions = [];
         let currentEditingQuestionId = null;
         let autoSaveTimeout = null;
-        let user = null;
-        let isDataLoaded = false;
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzDheXToz7fvt5Pv3zYWWsQsi1PxHvSCk2vEkGB2UFWWVjl2KrWklSUftRJgAkTRuhWTA/exec';
 
         // Initialize default categories
         const defaultCategories = [
@@ -338,136 +316,57 @@
             updateCategorySelects();
         });
 
-        // Load data from Firebase
+        // Load data from localStorage
         function loadData() {
-            if (!user) return;
-            if (isDataLoaded) return;
+            const savedCategories = localStorage.getItem('spiritualSurveyCategories');
+            const savedQuestions = localStorage.getItem('spiritualSurveyQuestions');
 
-            console.log('從Firebase加載數據...');
-
-            // 加載分類
-            database.ref('categories').once('value')
-                .then(snapshot => {
-                    const data = snapshot.val();
-                    if (data) {
-                        categories = Object.values(data);
-                    } else {
-                        // 初始化默認分類
-                        categories = [];
-                        defaultCategories.forEach(cat => {
+            if (savedCategories) {
+                categories = JSON.parse(savedCategories);
+            } else {
+                // Initialize with default categories
+                categories = [];
+                defaultCategories.forEach(cat => {
+                    categories.push({
+                        id: cat.id,
+                        name: cat.name,
+                        parent: cat.parent,
+                        questionCount: 0
+                    });
+                    if (cat.children) {
+                        cat.children.forEach(child => {
                             categories.push({
-                                id: cat.id,
-                                name: cat.name,
-                                parent: cat.parent,
+                                id: child.id,
+                                name: child.name,
+                                parent: child.parent,
                                 questionCount: 0
                             });
-                            if (cat.children) {
-                                cat.children.forEach(child => {
-                                    categories.push({
-                                        id: child.id,
-                                        name: child.name,
-                                        parent: child.parent,
-                                        questionCount: 0
-                                    });
-                                });
-                            }
                         });
-                        saveData();
                     }
-
-                    // 加載題目
-                    return database.ref('questions').once('value');
-                })
-                .then(snapshot => {
-                    const data = snapshot.val();
-                    if (data) {
-                        questions = Object.values(data);
-                    } else {
-                        questions = [];
-                    }
-
-                    updateQuestionCounts();
-                    renderCategoryTree();
-                    updateCategorySelects();
-                    isDataLoaded = true;
-                    console.log('數據加載完成');
-
-                    // 設置實時監聽
-                    setupRealtimeListeners();
-                })
-                .catch(error => {
-                    console.error('加載數據失敗:', error);
-                    showSaveStatus('error', '加載數據失敗');
                 });
+                saveData();
+            }
+
+            if (savedQuestions) {
+                questions = JSON.parse(savedQuestions);
+            }
+
+            updateQuestionCounts();
         }
 
-        // 設置實時監聽
-        function setupRealtimeListeners() {
-            // 監聽分類變化
-            database.ref('categories').on('value', snapshot => {
-                const data = snapshot.val();
-                if (data) {
-                    categories = Object.values(data);
-                    updateQuestionCounts();
-                    renderCategoryTree();
-                    updateCategorySelects();
-                }
-            });
-
-            // 監聽題目變化
-            database.ref('questions').on('value', snapshot => {
-                const data = snapshot.val();
-                if (data) {
-                    questions = Object.values(data);
-                    updateQuestionCounts();
-                    // 如果題庫可見，重新渲染
-                    if (!document.getElementById('questionBank').classList.contains('hidden')) {
-                        renderQuestionList();
-                    }
-                }
-            });
-        }
-
-        // Save data to Firebase
+        // Save data to localStorage
         function saveData() {
-            if (!user) return;
-
-            console.log('保存數據到Firebase...');
-
-            // 保存分類
-            const categoryUpdates = {};
-            categories.forEach(category => {
-                categoryUpdates[category.id] = category;
-            });
-
-            // 保存題目
-            const questionUpdates = {};
-            questions.forEach(question => {
-                questionUpdates[question.id] = question;
-            });
-
-            // 批量更新
-            database.ref().update({
-                'categories': categoryUpdates,
-                'questions': questionUpdates
-            })
-            .then(() => {
-                console.log('數據保存成功');
-            })
-            .catch(error => {
-                console.error('保存數據失敗:', error);
-                showSaveStatus('error', '保存數據失敗');
-            });
+            localStorage.setItem('spiritualSurveyCategories', JSON.stringify(categories));
+            localStorage.setItem('spiritualSurveyQuestions', JSON.stringify(questions));
+            updateQuestionCounts();
         }
 
         // Auto save with delay
         function autoSave() {
             clearTimeout(autoSaveTimeout);
             autoSaveTimeout = setTimeout(() => {
-                if (user) {
-                    saveData();
-                    showSaveStatus('success', '自動儲存成功');
-                }
+                saveData();
+                showSaveStatus('success', '自動儲存成功');
             }, 1000);
         }
 
@@ -1045,8 +944,34 @@
             showSaveStatus('success', '題庫匯出成功');
         }
 
-        // 注：已使用Firebase实时数据库替代Google Sheets同步
-        // Firebase会自动处理数据同步，无需额外的定时任务
+        // Sync data to Google Sheets
+        async function syncToGoogleSheets() {
+            try {
+                const data = {
+                    action: 'saveQuestionBank',
+                    categories: categories,
+                    questions: questions,
+                    timestamp: new Date().toISOString()
+                };
+
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                showSaveStatus('success', '資料已同步至雲端');
+            } catch (error) {
+                console.error('Sync error:', error);
+                showSaveStatus('error', '雲端同步失敗');
+            }
+        }
+
+        // Auto sync every 5 minutes
+        setInterval(syncToGoogleSheets, 5 * 60 * 1000);
     </script>
 </body>
 </html>
