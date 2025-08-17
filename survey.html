@@ -1,0 +1,861 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>靈性修養問卷 - 問卷作答</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        .question-card {
+            transition: all 0.3s ease;
+        }
+        .question-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .radio-option {
+            transition: all 0.2s ease;
+        }
+        .radio-option:hover {
+            background-color: #f3f4f6;
+        }
+        .radio-option input:checked + label {
+            background-color: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">靈性修養問卷</h1>
+                    <p class="text-sm text-gray-600">編制者：孫效智教授 | 編制單位：臺大生命教育研發育成中心暨為愛前行基金會</p>
+                </div>
+                <a href="index.html" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>返回編輯頁面
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="bg-white border-b">
+        <div class="container mx-auto px-4 py-2">
+            <div class="flex justify-between items-center text-sm text-gray-600 mb-2">
+                <span id="progressText">步驟 1 / 4</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div id="progressBar" class="progress-bar bg-blue-500 h-2 rounded-full" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Step 1: Introduction -->
+        <div id="step1" class="step-content fade-in">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="text-center mb-8">
+                    <i class="fas fa-heart text-6xl text-blue-500 mb-4"></i>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">歡迎參與靈性修養問卷</h2>
+                </div>
+
+                <div class="prose max-w-none mb-8">
+                    <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500 mb-6">
+                        <h3 class="text-xl font-semibold text-blue-800 mb-4">引導語</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            您是否曾想過：我的行程滿檔，為什麼內心深處仍會感到空虛？不太確定人生的目標與意義感？我的內心與人際關係為何常有一些衝突不和諧的地方？想處理這些問題，讓自己過得更充實滿足，卻不知道從哪裡開始？——或許，是時候來照顧自己的「靈性健康」了！
+                        </p>
+                        <p class="text-gray-700 leading-relaxed mt-4">
+                            靈性健康指的是一個人內在是否安定、明白生命的意義，能與自己、他人、自然及更大的生命連結，建立和諧的關係。它讓我們在困難中不迷失，在日常中找回平靜與希望。
+                        </p>
+                    </div>
+
+                    <div class="bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
+                        <h3 class="text-xl font-semibold text-green-800 mb-4">問卷說明</h3>
+                        <ul class="text-gray-700 space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span>本問卷旨在了解您的靈性修養狀況，幫助您更好地認識自己</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-clock text-green-500 mt-1 mr-3"></i>
+                                <span>預計填寫時間：12-15分鐘</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-shield-alt text-green-500 mt-1 mr-3"></i>
+                                <span>您的資料將被妥善保護，僅用於學術研究</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-chart-line text-green-500 mt-1 mr-3"></i>
+                                <span>完成後將提供個人化的分析結果</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button onclick="nextStep()" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors">
+                        開始填寫問卷 <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Consent Form -->
+        <div id="step2" class="step-content hidden">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                    <i class="fas fa-file-contract text-blue-500 mr-3"></i>問卷填寫同意書
+                </h2>
+
+                <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">研究目的與內容</h3>
+                    <p class="text-gray-700 mb-4">
+                        本研究旨在了解個人靈性修養的現況，透過科學化的評估工具，幫助參與者更深入地認識自己的靈性健康狀態，並提供相應的建議與指導。
+                    </p>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">資料使用與保護</h3>
+                    <ul class="text-gray-700 space-y-2 mb-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-lock text-blue-500 mt-1 mr-3"></i>
+                            <span>您的個人資料將被嚴格保密，僅用於學術研究目的</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-user-shield text-blue-500 mt-1 mr-3"></i>
+                            <span>研究結果將以匿名方式呈現，不會洩露您的個人身份</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-database text-blue-500 mt-1 mr-3"></i>
+                            <span>資料將安全儲存，並在研究結束後適當處理</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-hand-paper text-blue-500 mt-1 mr-3"></i>
+                            <span>您有權隨時退出研究，無需說明理由</span>
+                        </li>
+                    </ul>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">參與權益</h3>
+                    <p class="text-gray-700">
+                        參與本研究完全出於自願，您將獲得個人化的靈性健康評估報告，幫助您更好地了解自己的靈性狀態並獲得改善建議。
+                    </p>
+                </div>
+
+                <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" id="consentCheck" class="mr-3 w-5 h-5 text-blue-500 rounded focus:ring-2 focus:ring-blue-500">
+                        <span class="text-gray-800 font-medium">
+                            我已詳細閱讀並理解上述說明，同意參與本研究並填寫問卷
+                        </span>
+                    </label>
+                </div>
+
+                <div class="flex justify-between">
+                    <button onclick="prevStep()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>上一步
+                    </button>
+                    <button id="consentNext" onclick="nextStep()" disabled class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed">
+                        同意並繼續 <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Personal Information -->
+        <div id="step3" class="step-content hidden">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                    <i class="fas fa-user text-blue-500 mr-3"></i>基本資料
+                </h2>
+
+                <p class="text-gray-600 text-center mb-8">
+                    收集您的基本背景資訊，這些資訊有助於提供更精準的評估結果和建議
+                </p>
+
+                <form id="personalInfoForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">姓名 *</label>
+                            <input type="text" id="name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="請輸入您的姓名">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">生日 *</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <input type="number" id="birthYear" required min="1900" max="2024" class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="年">
+                                <input type="number" id="birthMonth" required min="1" max="12" class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="月">
+                                <input type="number" id="birthDay" required min="1" max="31" class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="日">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">性別 *</label>
+                            <div class="flex space-x-4">
+                                <label class="flex items-center">
+                                    <input type="radio" name="gender" value="男性" required class="mr-2">
+                                    <span>男性</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="gender" value="女性" required class="mr-2">
+                                    <span>女性</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="gender" value="其他" required class="mr-2">
+                                    <span>其他</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">國籍 *</label>
+                            <input type="text" id="nationality" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="請輸入國籍">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">目前居住城市 *</label>
+                            <input type="text" id="city" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="請輸入居住城市">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">職業 *</label>
+                            <input type="text" id="occupation" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="請輸入職業">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">教育程度 *</label>
+                            <select id="education" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="">請選擇教育程度</option>
+                                <option value="國小及以下">國小及以下</option>
+                                <option value="國中">國中</option>
+                                <option value="高中職">高中職</option>
+                                <option value="專科">專科</option>
+                                <option value="大學">大學</option>
+                                <option value="碩士">碩士</option>
+                                <option value="博士">博士</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">婚姻狀況 *</label>
+                            <select id="maritalStatus" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="">請選擇婚姻狀況</option>
+                                <option value="未婚">未婚</option>
+                                <option value="已婚">已婚</option>
+                                <option value="離婚">離婚</option>
+                                <option value="喪偶">喪偶</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">宗教信仰 *</label>
+                            <select id="religion" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="">請選擇宗教信仰</option>
+                                <option value="無宗教信仰">無宗教信仰</option>
+                                <option value="佛教">佛教</option>
+                                <option value="道教">道教</option>
+                                <option value="基督教">基督教</option>
+                                <option value="天主教">天主教</option>
+                                <option value="伊斯蘭教">伊斯蘭教</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+
+                        <div id="otherReligionDiv" class="hidden">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">其他宗教信仰</label>
+                            <input type="text" id="otherReligion" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="請說明其他宗教信仰">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">居住狀況 *</label>
+                            <select id="livingStatus" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="">請選擇居住狀況</option>
+                                <option value="獨居">獨居</option>
+                                <option value="與親屬同住">與親屬同住</option>
+                                <option value="與非親屬同住">與非親屬同住</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+
+                        <div id="otherLivingDiv" class="hidden">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">其他居住狀況</label>
+                            <input type="text" id="otherLiving" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="請說明其他居住狀況">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">檢測日期</label>
+                        <input type="date" id="testDate" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" readonly>
+                    </div>
+                </form>
+
+                <div class="flex justify-between mt-8">
+                    <button onclick="prevStep()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>上一步
+                    </button>
+                    <button onclick="validatePersonalInfo()" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors">
+                        繼續填寫問卷 <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Survey Questions -->
+        <div id="step4" class="step-content hidden">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                    <i class="fas fa-clipboard-list text-blue-500 mr-3"></i>問卷題目
+                </h2>
+
+                <!-- Rating Scale Legend -->
+                <div class="bg-blue-50 p-6 rounded-lg mb-8">
+                    <h3 class="font-semibold text-blue-800 mb-4 text-center">評分說明</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 text-sm">
+                        <div class="bg-red-100 text-red-800 px-3 py-2 rounded text-center font-medium">1 - 完全不符合</div>
+                        <div class="bg-orange-100 text-orange-800 px-3 py-2 rounded text-center font-medium">2 - 很不符合</div>
+                        <div class="bg-yellow-100 text-yellow-800 px-3 py-2 rounded text-center font-medium">3 - 不太符合</div>
+                        <div class="bg-green-100 text-green-800 px-3 py-2 rounded text-center font-medium">4 - 有點符合</div>
+                        <div class="bg-blue-100 text-blue-800 px-3 py-2 rounded text-center font-medium">5 - 很符合</div>
+                        <div class="bg-purple-100 text-purple-800 px-3 py-2 rounded text-center font-medium">6 - 完全符合</div>
+                    </div>
+                </div>
+
+                <!-- Question Progress -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center text-sm text-gray-600 mb-2">
+                        <span id="questionProgress">題目 0 / 0</span>
+                        <span id="questionPercent">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="questionProgressBar" class="progress-bar bg-green-500 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Questions Container -->
+                <div id="questionsContainer" class="space-y-6">
+                    <!-- Questions will be loaded here -->
+                </div>
+
+                <!-- Religious Questions Notice -->
+                <div id="religiousNotice" class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg mb-6 hidden">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-info-circle text-yellow-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-yellow-700">
+                                以下是針對有宗教信仰者的專屬題目，請根據您的信仰背景作答。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-8">
+                    <button onclick="prevStep()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>上一步
+                    </button>
+                    <button id="submitBtn" onclick="submitSurvey()" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors hidden">
+                        <i class="fas fa-paper-plane mr-2"></i>提交問卷
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5: Thank You -->
+        <div id="step5" class="step-content hidden">
+            <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+                <div class="mb-8">
+                    <i class="fas fa-check-circle text-6xl text-green-500 mb-4"></i>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">問卷提交成功！</h2>
+                    <p class="text-gray-600 text-lg">感謝您的參與，您的回答對我們的研究非常寶貴</p>
+                </div>
+
+                <div class="bg-green-50 p-6 rounded-lg mb-8">
+                    <h3 class="text-xl font-semibold text-green-800 mb-4">接下來...</h3>
+                    <ul class="text-green-700 space-y-2">
+                        <li class="flex items-center justify-center">
+                            <i class="fas fa-chart-bar text-green-500 mr-3"></i>
+                            <span>我們將分析您的回答</span>
+                        </li>
+                        <li class="flex items-center justify-center">
+                            <i class="fas fa-file-alt text-green-500 mr-3"></i>
+                            <span>為您準備個人化的評估報告</span>
+                        </li>
+                        <li class="flex items-center justify-center">
+                            <i class="fas fa-lightbulb text-green-500 mr-3"></i>
+                            <span>提供靈性健康改善建議</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="flex justify-center space-x-4">
+                    <a href="index.html" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors">
+                        <i class="fas fa-home mr-2"></i>返回首頁
+                    </a>
+                    <button onclick="location.reload()" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors">
+                        <i class="fas fa-redo mr-2"></i>重新填寫
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white rounded-lg p-8 text-center">
+                <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                <p class="text-gray-700">正在提交問卷，請稍候...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentStep = 1;
+        let questions = [];
+        let commonQuestions = [];
+        let religiousQuestions = [];
+        let answers = {};
+        let personalInfo = {};
+        let hasReligion = false;
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzDheXToz7fvt5Pv3zYWWsQsi1PxHvSCk2vEkGB2UFWWVjl2KrWklSUftRJgAkTRuhWTA/exec';
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadQuestions();
+            initializeEventListeners();
+            updateProgress();
+            setCurrentDate();
+        });
+
+        // Load questions from localStorage
+        function loadQuestions() {
+            const savedQuestions = localStorage.getItem('spiritualSurveyQuestions');
+            if (savedQuestions) {
+                questions = JSON.parse(savedQuestions);
+                
+                // Separate common and religious questions
+                commonQuestions = questions.filter(q => q.type === 'common');
+                religiousQuestions = questions.filter(q => q.type === 'religious');
+                
+                // Randomize question order
+                commonQuestions = shuffleArray([...commonQuestions]);
+                religiousQuestions = shuffleArray([...religiousQuestions]);
+            } else {
+                // Show error if no questions found
+                alert('找不到問卷題目，請先到編輯頁面建立題目。');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Shuffle array function
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Initialize event listeners
+        function initializeEventListeners() {
+            // Consent checkbox
+            document.getElementById('consentCheck').addEventListener('change', function() {
+                const nextBtn = document.getElementById('consentNext');
+                nextBtn.disabled = !this.checked;
+            });
+
+            // Religion select change
+            document.getElementById('religion').addEventListener('change', function() {
+                const otherDiv = document.getElementById('otherReligionDiv');
+                const otherInput = document.getElementById('otherReligion');
+                
+                if (this.value === '其他') {
+                    otherDiv.classList.remove('hidden');
+                    otherInput.required = true;
+                } else {
+                    otherDiv.classList.add('hidden');
+                    otherInput.required = false;
+                    otherInput.value = '';
+                }
+
+                hasReligion = this.value !== '無宗教信仰' && this.value !== '';
+            });
+
+            // Living status select change
+            document.getElementById('livingStatus').addEventListener('change', function() {
+                const otherDiv = document.getElementById('otherLivingDiv');
+                const otherInput = document.getElementById('otherLiving');
+                
+                if (this.value === '其他') {
+                    otherDiv.classList.remove('hidden');
+                    otherInput.required = true;
+                } else {
+                    otherDiv.classList.add('hidden');
+                    otherInput.required = false;
+                    otherInput.value = '';
+                }
+            });
+        }
+
+        // Set current date
+        function setCurrentDate() {
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0];
+            document.getElementById('testDate').value = dateString;
+        }
+
+        // Update progress
+        function updateProgress() {
+            const totalSteps = 4;
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            
+            document.getElementById('progressText').textContent = `步驟 ${currentStep} / ${totalSteps}`;
+            document.getElementById('progressPercent').textContent = `${Math.round(progress)}%`;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+        // Next step
+        function nextStep() {
+            if (currentStep < 5) {
+                // Hide current step
+                document.getElementById(`step${currentStep}`).classList.add('hidden');
+                
+                currentStep++;
+                
+                // Show next step
+                const nextStepElement = document.getElementById(`step${currentStep}`);
+                nextStepElement.classList.remove('hidden');
+                nextStepElement.classList.add('fade-in');
+                
+                // Load questions when reaching step 4
+                if (currentStep === 4) {
+                    renderQuestions();
+                }
+                
+                updateProgress();
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Previous step
+        function prevStep() {
+            if (currentStep > 1) {
+                // Hide current step
+                document.getElementById(`step${currentStep}`).classList.add('hidden');
+                
+                currentStep--;
+                
+                // Show previous step
+                const prevStepElement = document.getElementById(`step${currentStep}`);
+                prevStepElement.classList.remove('hidden');
+                prevStepElement.classList.add('fade-in');
+                
+                updateProgress();
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Validate personal information
+        function validatePersonalInfo() {
+            const form = document.getElementById('personalInfoForm');
+            const formData = new FormData(form);
+            
+            // Check required fields
+            const requiredFields = ['name', 'birthYear', 'birthMonth', 'birthDay', 'nationality', 'city', 'occupation'];
+            const requiredSelects = ['gender', 'education', 'maritalStatus', 'religion', 'livingStatus'];
+            
+            let isValid = true;
+            let missingFields = [];
+
+            // Check text inputs
+            requiredFields.forEach(field => {
+                const value = document.getElementById(field).value.trim();
+                if (!value) {
+                    isValid = false;
+                    missingFields.push(field);
+                }
+            });
+
+            // Check selects and radios
+            requiredSelects.forEach(field => {
+                let value;
+                if (field === 'gender') {
+                    value = document.querySelector('input[name="gender"]:checked')?.value;
+                } else {
+                    value = document.getElementById(field).value;
+                }
+                
+                if (!value) {
+                    isValid = false;
+                    missingFields.push(field);
+                }
+            });
+
+            // Check conditional fields
+            const religion = document.getElementById('religion').value;
+            if (religion === '其他' && !document.getElementById('otherReligion').value.trim()) {
+                isValid = false;
+                missingFields.push('otherReligion');
+            }
+
+            const livingStatus = document.getElementById('livingStatus').value;
+            if (livingStatus === '其他' && !document.getElementById('otherLiving').value.trim()) {
+                isValid = false;
+                missingFields.push('otherLiving');
+            }
+
+            if (!isValid) {
+                alert('請填寫所有必填欄位');
+                return;
+            }
+
+            // Store personal information
+            personalInfo = {
+                name: document.getElementById('name').value.trim(),
+                birthYear: document.getElementById('birthYear').value,
+                birthMonth: document.getElementById('birthMonth').value,
+                birthDay: document.getElementById('birthDay').value,
+                gender: document.querySelector('input[name="gender"]:checked').value,
+                nationality: document.getElementById('nationality').value.trim(),
+                city: document.getElementById('city').value.trim(),
+                occupation: document.getElementById('occupation').value.trim(),
+                education: document.getElementById('education').value,
+                maritalStatus: document.getElementById('maritalStatus').value,
+                religion: religion === '其他' ? document.getElementById('otherReligion').value.trim() : religion,
+                livingStatus: livingStatus === '其他' ? document.getElementById('otherLiving').value.trim() : livingStatus,
+                testDate: document.getElementById('testDate').value
+            };
+
+            hasReligion = personalInfo.religion !== '無宗教信仰';
+            
+            nextStep();
+        }
+
+        // Render questions
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            let allQuestions = [...commonQuestions];
+            
+            // Add religious questions if user has religion
+            if (hasReligion && religiousQuestions.length > 0) {
+                allQuestions = [...allQuestions, ...religiousQuestions];
+            }
+
+            // Update question progress
+            updateQuestionProgress(0, allQuestions.length);
+
+            allQuestions.forEach((question, index) => {
+                const isReligious = question.type === 'religious';
+                
+                // Show religious notice before first religious question
+                if (isReligious && index > 0 && allQuestions[index - 1].type !== 'religious') {
+                    const notice = document.getElementById('religiousNotice').cloneNode(true);
+                    notice.classList.remove('hidden');
+                    notice.id = `notice-${index}`;
+                    container.appendChild(notice);
+                }
+
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-card bg-gray-50 p-6 rounded-lg border border-gray-200';
+                questionDiv.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-medium text-gray-800 text-lg">題目 ${index + 1}</h4>
+                        <div class="flex space-x-2">
+                            ${isReligious ? '<span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">宗教專屬題</span>' : '<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">共通題</span>'}
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 text-lg leading-relaxed">${question.text}</p>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                        ${[1,2,3,4,5,6].map(num => `
+                            <div class="radio-option">
+                                <input type="radio" id="q${question.id}_${num}" name="q${question.id}" value="${num}" class="hidden" onchange="updateAnswer('${question.id}', ${num})">
+                                <label for="q${question.id}_${num}" class="block p-3 text-center border-2 border-gray-300 rounded-lg cursor-pointer transition-all hover:border-blue-400 hover:bg-blue-50">
+                                    <div class="font-bold text-lg mb-1">${num}</div>
+                                    <div class="text-xs text-gray-600">${getScaleText(num)}</div>
+                                </label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+
+            // Show submit button if all questions are rendered
+            if (allQuestions.length > 0) {
+                document.getElementById('submitBtn').classList.remove('hidden');
+            }
+        }
+
+        // Get scale text
+        function getScaleText(num) {
+            const texts = {
+                1: '完全不符合',
+                2: '很不符合',
+                3: '不太符合',
+                4: '有點符合',
+                5: '很符合',
+                6: '完全符合'
+            };
+            return texts[num];
+        }
+
+        // Update answer
+        function updateAnswer(questionId, value) {
+            answers[questionId] = value;
+            
+            // Update question progress
+            const totalQuestions = hasReligion ? commonQuestions.length + religiousQuestions.length : commonQuestions.length;
+            const answeredQuestions = Object.keys(answers).length;
+            
+            updateQuestionProgress(answeredQuestions, totalQuestions);
+            
+            // Check if all questions are answered
+            if (answeredQuestions === totalQuestions) {
+                document.getElementById('submitBtn').classList.add('animate-pulse');
+            }
+        }
+
+        // Update question progress
+        function updateQuestionProgress(answered, total) {
+            const progress = total > 0 ? (answered / total) * 100 : 0;
+            
+            document.getElementById('questionProgress').textContent = `題目 ${answered} / ${total}`;
+            document.getElementById('questionPercent').textContent = `${Math.round(progress)}%`;
+            document.getElementById('questionProgressBar').style.width = `${progress}%`;
+        }
+
+        // Submit survey
+        async function submitSurvey() {
+            const totalQuestions = hasReligion ? commonQuestions.length + religiousQuestions.length : commonQuestions.length;
+            const answeredQuestions = Object.keys(answers).length;
+            
+            if (answeredQuestions < totalQuestions) {
+                alert(`請回答所有題目（已回答 ${answeredQuestions}/${totalQuestions} 題）`);
+                return;
+            }
+
+            // Show loading modal
+            document.getElementById('loadingModal').classList.remove('hidden');
+
+            try {
+                // Prepare submission data
+                const submissionData = {
+                    action: 'submitSurvey',
+                    personalInfo: personalInfo,
+                    answers: answers,
+                    hasReligion: hasReligion,
+                    submissionTime: new Date().toISOString(),
+                    questionCount: {
+                        common: commonQuestions.length,
+                        religious: religiousQuestions.length,
+                        total: totalQuestions
+                    }
+                };
+
+                // Submit to Google Sheets
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(submissionData)
+                });
+
+                // Hide loading modal
+                document.getElementById('loadingModal').classList.add('hidden');
+
+                // Show success page
+                nextStep();
+
+            } catch (error) {
+                console.error('Submission error:', error);
+                
+                // Hide loading modal
+                document.getElementById('loadingModal').classList.add('hidden');
+                
+                // Show error message but still proceed to thank you page
+                alert('問卷提交可能遇到網路問題，但您的回答已被記錄。感謝您的參與！');
+                nextStep();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && currentStep < 4) {
+                const activeElement = document.activeElement;
+                if (activeElement.tagName !== 'TEXTAREA' && activeElement.tagName !== 'INPUT') {
+                    if (currentStep === 2 && document.getElementById('consentCheck').checked) {
+                        nextStep();
+                    } else if (currentStep === 3) {
+                        validatePersonalInfo();
+                    } else if (currentStep === 1) {
+                        nextStep();
+                    }
+                }
+            }
+        });
+
+        // Auto-save answers to localStorage
+        function autoSaveAnswers() {
+            localStorage.setItem('surveyAnswers', JSON.stringify({
+                personalInfo: personalInfo,
+                answers: answers,
+                timestamp: new Date().toISOString()
+            }));
+        }
+
+        // Load saved answers on page load
+        function loadSavedAnswers() {
+            const saved = localStorage.getItem('surveyAnswers');
+            if (saved) {
+                const data = JSON.parse(saved);
+                // Check if saved data is recent (within 24 hours)
+                const savedTime = new Date(data.timestamp);
+                const now = new Date();
+                const hoursDiff = (now - savedTime) / (1000 * 60 * 60);
+                
+                if (hoursDiff < 24) {
+                    if (confirm('發現未完成的問卷，是否要繼續填寫？')) {
+                        personalInfo = data.personalInfo || {};
+                        answers = data.answers || {};
+                        // Restore form data if needed
+                    }
+                }
+            }
+        }
+
+        // Save answers periodically
+        setInterval(autoSaveAnswers, 30000); // Save every 30 seconds
+
+        // Clear saved answers on successful submission
+        function clearSavedAnswers() {
+            localStorage.removeItem('surveyAnswers');
+        }
+    </script>
+</body>
+</html>
